@@ -1,0 +1,70 @@
+.seedance {
+    overflow-y: hidden;
+
+    .main-area {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: green;
+
+        .input-block {
+            width: 50%;
+            background-color: rgb(100, 100, 0);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .input-mode,
+            .input-reference-images,
+            .result-block-title {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .input-reference-images-dropzone {
+                min-height: 5rem;
+                width: 100%;
+                background-color: orange;
+            }
+
+            .prompt-block-textarea {
+                width: 100%;
+                height: 5rem;
+                overflow-y: auto;
+                resize: vertical;
+            }
+        }
+
+        .result-block {
+            width: 50%;
+            background-color: rgb(120, 0, 0);
+            overflow-y: auto;
+            margin: 1rem;
+
+            .result-block-list {
+                overflow: scroll;
+                display: flex;
+                flex-direction: column;
+                gap: 4rem;
+                padding: 2rem;
+
+                .result-block-task {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    background-color: aqua;
+
+                    .result-block-task-image-replacer {
+                        width: 100%;
+                        min-height: 5rem;
+                        background-color: purple;
+                    }
+                }
+            }
+        }
+    }
+}
