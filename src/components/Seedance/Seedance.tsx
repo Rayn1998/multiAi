@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, type SubmitHandler} from 'react-hook-form';
 
 import { generateVideo } from '../../services/seedance';
+
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 import "./Seedance.css";
 
@@ -26,8 +28,27 @@ const Seedance = () => {
     const [results, setResults] = useState<number[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const [onHover, setOnHover] = useState<boolean>(false);
+
     const { register, handleSubmit, reset } = useForm<Inputs>();
 
+    useEffect(() => {
+        let unlisten: (() => void) | undefined;
+        async function setup() {
+            const window = getCurrentWindow();
+
+            unlisten = await window.onDragDropEvent((event) => {
+                console.log('TAURI DROP EVENT:', event);
+            });
+        }
+
+        setup();
+
+        return () => {
+            unlisten?.();
+        };
+    }, [])
+    
     const handleChangeMode = (event: any) => {
         setMode(event.target.value)
     }
@@ -70,9 +91,13 @@ const Seedance = () => {
                         })}
                     </select>
                 </div>
-                <div className="input-reference-images">
+                <div 
+                    className="input-reference-images"
+                    style={{backgroundColor: onHover ? "red" : "green"}}
+                    onDrop={() => setOnHover(true)}
+                >
                     <p>Reference images (optional)</p>
-                    <input {...register("referenceImages")} type="file" accept="image/*, video/*" onDrop={handleDrop} className="input-reference-images-dropzone" />
+                    <input {...register("referenceImages")} type="file" accept="image/*, video/*" onDropCapture={handleDrop} className="input-reference-images-dropzone" />
                     <p>1/30</p>
                 </div>
                  <div className="input-reference-videos">
@@ -122,7 +147,7 @@ const Seedance = () => {
                 </div>
                 <div className='result-block-list'>
                     {isLoading && <div className='loader'></div>}
-                    {results && results.map((result, i) => {
+                    {results && results.map((_, i) => {
                         return <div key={i} className='result-block-task'>
                         <div className="result-block-task-status">Success</div>
                         <p className='result-block-task-prompt'>Prompt</p>

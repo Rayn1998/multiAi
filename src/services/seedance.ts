@@ -1,4 +1,4 @@
-export const generateVideo = async (params: any) => {
+export const generateVideo = async (_params: any) => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     return {
         id: crypto.randomUUID(),
