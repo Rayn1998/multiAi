@@ -1,3 +1,7 @@
+@use "components/App/App.scss";
+@use "components/Layout/Layout.scss";
+@use "pages/Seedance/Seedance/Seedance_2_5.scss";
+
 @font-face {
   font-family: "Grotesk";
   src: url("./assets/fonts/Grotesk.otf") format("opentype");
@@ -46,7 +50,7 @@ select {
   animation: l15 1s infinite linear;
 }
 .loader::before,
-.loader::after {    
+.loader::after {
   content: "";
   grid-area: 1/1;
   margin: 2px;
@@ -58,6 +62,8 @@ select {
   margin: 8px;
   animation-duration: 3s;
 }
-@keyframes l15{ 
-  100%{transform: rotate(1turn)}
+@keyframes l15 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
